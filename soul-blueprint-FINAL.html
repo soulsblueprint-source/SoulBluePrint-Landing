@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Soul Blueprint — Your Complete Cosmic Identity</title>
+<link href="Soul%20Blueprint%20%E2%80%94%20Your%20Complete%20Cosmic%20Identity_files/css2.css" rel="stylesheet">
+<style>
+  :root {
+    --gold: #c9a84c; --gold-light: #e8cc7a; --gold-dim: #7a6030;
+    --deep: #06050f; --deep2: #0d0b1e; --deep3: #13102b;
+    --cream: #f5f0e8; --cream2: #ede6d6; --text: #d4cfc4; --text-dim: #8a8478;
+    --accent: #7b5ea7; --accent2: #a07bd4;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body { background:var(--deep); color:var(--text); font-family:'Lato',sans-serif; font-weight:300; overflow-x:hidden; }
+
+  /* ── SETUP BANNER (remove after going live) ── */
+  .setup-banner {
+    position:fixed; top:0; left:0; right:0; z-index:999;
+    background:linear-gradient(135deg,#1a0a00,#3a1800);
+    border-bottom:1px solid var(--gold-dim);
+    padding:10px 24px;
+    display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;
+  }
+  .setup-banner p { font-size:0.78rem; color:var(--gold-light); }
+  .setup-banner p strong { color:white; }
+  .setup-banner a { font-size:0.72rem; color:var(--gold); text-decoration:underline; cursor:pointer; white-space:nowrap; }
+  .setup-banner-close { background:none; border:1px solid var(--gold-dim); color:var(--gold); font-size:0.68rem; padding:4px 12px; cursor:pointer; font-family:'Cinzel',serif; letter-spacing:0.1em; }
+
+  /* ── SETUP MODAL ── */
+  .modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:1000; display:none; align-items:center; justify-content:center; padding:24px; }
+  .modal-overlay.open { display:flex; }
+  .modal { background:var(--deep2); border:1px solid var(--gold-dim); max-width:600px; width:100%; padding:44px; position:relative; max-height:90vh; overflow-y:auto; }
+  .modal::before { content:''; position:absolute; top:-1px; left:10%; right:10%; height:1px; background:linear-gradient(to right,transparent,var(--gold),transparent); }
+  .modal h2 { font-family:'Cormorant Garamond',serif; font-size:2rem; color:var(--cream); font-weight:300; margin-bottom:6px; }
+  .modal .sub { font-size:0.85rem; color:var(--text-dim); margin-bottom:32px; }
+  .modal-close { position:absolute; top:20px; right:20px; background:none; border:none; color:var(--text-dim); font-size:1.4rem; cursor:pointer; line-height:1; }
+  .modal-close:hover { color:var(--gold); }
+  .step-block { margin-bottom:28px; }
+  .step-block .sn { font-family:'Cinzel',serif; font-size:0.6rem; letter-spacing:0.3em; color:var(--gold); text-transform:uppercase; margin-bottom:6px; }
+  .step-block h3 { font-family:'Cormorant Garamond',serif; font-size:1.2rem; color:var(--cream); font-weight:400; margin-bottom:8px; }
+  .step-block p { font-size:0.85rem; color:var(--text-dim); line-height:1.8; }
+  .step-block code { background:rgba(201,168,76,0.1); border:1px solid rgba(201,168,76,0.2); color:var(--gold-light); padding:2px 8px; font-size:0.82rem; border-radius:2px; word-break:break-all; }
+  .step-block .field-row { display:flex; gap:10px; margin-top:10px; }
+  .step-block input { flex:1; background:rgba(201,168,76,0.05); border:1px solid rgba(201,168,76,0.25); color:var(--cream); font-size:0.88rem; padding:10px 14px; font-family:'Lato',sans-serif; outline:none; }
+  .step-block input:focus { border-color:rgba(201,168,76,0.6); }
+  .step-block input::placeholder { color:var(--text-dim); }
+  .apply-btn { background:linear-gradient(135deg,var(--gold-dim),var(--gold)); color:var(--deep); border:none; font-family:'Cinzel',serif; font-size:0.68rem; letter-spacing:0.15em; padding:10px 20px; cursor:pointer; white-space:nowrap; text-transform:uppercase; }
+  .apply-btn:hover { opacity:0.9; }
+  .divider-modal { height:1px; background:rgba(201,168,76,0.1); margin:24px 0; }
+  .tag-url { display:inline-block; background:rgba(201,168,76,0.08); border:1px solid rgba(201,168,76,0.2); color:var(--text-dim); font-size:0.78rem; padding:8px 14px; margin-top:8px; word-break:break-all; }
+  .note { font-size:0.78rem; color:var(--text-dim); margin-top:8px; line-height:1.7; font-style:italic; }
+
+  /* ── STARFIELD ── */
+  .starfield { position:fixed; inset:0; z-index:0; pointer-events:none; }
+  .star { position:absolute; border-radius:50%; background:white; animation:twinkle var(--dur) ease-in-out infinite alternate; opacity:0; }
+  @keyframes twinkle { 0%{opacity:0.1;transform:scale(1)} 100%{opacity:var(--max-op);transform:scale(1.4)} }
+  body::before { content:''; position:fixed; inset:0; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E"); opacity:0.4; pointer-events:none; z-index:1; }
+  section,header,footer { position:relative; z-index:2; }
+
+  /* ── HERO ── */
+  header { min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:80px 24px 60px; background:radial-gradient(ellipse 80% 70% at 50% 40%,#1a1040 0%,var(--deep) 70%); overflow:hidden; }
+  .mandala { position:absolute; width:700px; height:700px; top:50%; left:50%; transform:translate(-50%,-50%); opacity:0.07; animation:spin 120s linear infinite; }
+  .mandala2 { position:absolute; width:400px; height:400px; top:50%; left:50%; transform:translate(-50%,-50%); opacity:0.1; animation:spin 60s linear infinite reverse; }
+  @keyframes spin { to { transform:translate(-50%,-50%) rotate(360deg); } }
+  .eyebrow { font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.35em; color:var(--gold); text-transform:uppercase; margin-bottom:28px; animation:fadeUp 1s ease 0.2s both; }
+  h1 { font-family:'Cormorant Garamond',serif; font-size:clamp(3rem,9vw,7.5rem); font-weight:300; line-height:1.0; color:var(--cream); animation:fadeUp 1s ease 0.4s both; }
+  h1 em { font-style:italic; color:var(--gold-light); display:block; }
+  .hero-sub { font-size:clamp(0.95rem,2vw,1.15rem); color:var(--text-dim); max-width:560px; line-height:1.8; margin:28px auto 50px; animation:fadeUp 1s ease 0.6s both; }
+  .cta-wrap { animation:fadeUp 1s ease 0.8s both; }
+  .cta-btn { display:inline-block; padding:18px 52px; background:linear-gradient(135deg,var(--gold-dim),var(--gold),var(--gold-light)); color:var(--deep); font-family:'Cinzel',serif; font-size:0.8rem; letter-spacing:0.25em; text-decoration:none; text-transform:uppercase; border:none; cursor:pointer; position:relative; overflow:hidden; transition:transform 0.3s,box-shadow 0.3s; box-shadow:0 0 40px rgba(201,168,76,0.3); }
+  .cta-btn::before { content:''; position:absolute; inset:0; background:linear-gradient(135deg,transparent,rgba(255,255,255,0.2),transparent); transform:translateX(-100%); transition:transform 0.5s; }
+  .cta-btn:hover { transform:translateY(-2px); box-shadow:0 6px 60px rgba(201,168,76,0.5); }
+  .cta-btn:hover::before { transform:translateX(100%); }
+  .price-hint { margin-top:16px; font-size:0.82rem; color:var(--text-dim); letter-spacing:0.05em; }
+  .price-hint s { color:#5a5650; }
+  .price-hint strong { color:var(--gold); }
+  .scroll-cue { position:absolute; bottom:36px; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:8px; color:var(--text-dim); font-size:0.65rem; letter-spacing:0.2em; text-transform:uppercase; animation:fadeUp 1s ease 1.2s both; }
+  .scroll-line { width:1px; height:48px; background:linear-gradient(to bottom,var(--gold),transparent); animation:pulse-line 2s ease-in-out infinite; }
+  @keyframes pulse-line { 0%,100%{opacity:0.3} 50%{opacity:1} }
+  @keyframes fadeUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+
+  /* ── DIVIDER ── */
+  .divider { display:flex; align-items:center; gap:20px; max-width:400px; margin:0 auto 80px; padding:0 24px; }
+  .divider-line { flex:1; height:1px; background:linear-gradient(to right,transparent,var(--gold-dim),transparent); }
+  .divider-gem { color:var(--gold); font-size:0.8rem; }
+
+  /* ── SECTIONS ── */
+  .section { padding:100px 24px; max-width:1100px; margin:0 auto; }
+  .section-label { font-family:'Cinzel',serif; font-size:0.65rem; letter-spacing:0.4em; color:var(--gold); text-transform:uppercase; text-align:center; margin-bottom:20px; }
+  h2 { font-family:'Cormorant Garamond',serif; font-size:clamp(2rem,5vw,3.8rem); font-weight:300; color:var(--cream); text-align:center; line-height:1.15; margin-bottom:24px; }
+  h2 em { font-style:italic; color:var(--gold-light); }
+  .section-intro { max-width:640px; margin:0 auto 70px; text-align:center; line-height:1.9; color:var(--text-dim); font-size:1.05rem; }
+
+  /* ── SYSTEMS GRID ── */
+  .systems-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:2px; background:var(--gold-dim); border:1px solid var(--gold-dim); margin-bottom:100px; }
+  .system-card { background:var(--deep2); padding:44px 36px; transition:background 0.3s; position:relative; overflow:hidden; }
+  .system-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(to right,transparent,var(--gold),transparent); opacity:0; transition:opacity 0.3s; }
+  .system-card:hover { background:var(--deep3); }
+  .system-card:hover::before { opacity:1; }
+  .system-icon { font-size:2rem; margin-bottom:18px; display:block; }
+  .system-name { font-family:'Cinzel',serif; font-size:0.75rem; letter-spacing:0.25em; color:var(--gold); text-transform:uppercase; margin-bottom:12px; }
+  .system-title { font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-weight:400; color:var(--cream); margin-bottom:14px; }
+  .system-desc { font-size:0.88rem; line-height:1.8; color:var(--text-dim); }
+
+  /* ── FEATURES ── */
+  .features-bg { background:linear-gradient(180deg,var(--deep) 0%,var(--deep2) 50%,var(--deep) 100%); padding:100px 24px; }
+  .features-inner { max-width:1000px; margin:0 auto; }
+  .features-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:40px; margin-top:60px; }
+  .feature-item { display:flex; gap:20px; align-items:flex-start; }
+  .feature-num { font-family:'Cormorant Garamond',serif; font-size:3rem; font-weight:300; color:var(--gold-dim); line-height:1; flex-shrink:0; width:48px; opacity:0.6; }
+  .feature-text h3 { font-family:'Cormorant Garamond',serif; font-size:1.3rem; color:var(--cream); font-weight:400; margin-bottom:8px; }
+  .feature-text p { font-size:0.87rem; line-height:1.8; color:var(--text-dim); }
+
+  /* ── TESTIMONIALS ── */
+  .testimonials { padding:100px 24px; max-width:1100px; margin:0 auto; }
+  .testi-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:24px; margin-top:60px; }
+  .testi-card { background:var(--deep2); border:1px solid rgba(201,168,76,0.12); padding:40px 36px; }
+  .testi-quote { font-family:'Cormorant Garamond',serif; font-size:4rem; color:var(--gold-dim); line-height:0.5; margin-bottom:20px; opacity:0.5; }
+  .testi-text { font-family:'Cormorant Garamond',serif; font-size:1.08rem; line-height:1.85; color:var(--text); font-style:italic; margin-bottom:24px; }
+  .testi-author { font-family:'Cinzel',serif; font-size:0.65rem; letter-spacing:0.25em; color:var(--gold); text-transform:uppercase; }
+  .testi-detail { font-size:0.75rem; color:var(--text-dim); margin-top:4px; }
+
+  /* ── PRICING ── */
+  .pricing-section { background:radial-gradient(ellipse 70% 60% at 50% 50%,#1a1040 0%,var(--deep) 70%); padding:120px 24px; text-align:center; }
+  .pricing-card { max-width:520px; margin:60px auto 0; border:1px solid var(--gold-dim); background:var(--deep2); padding:60px 52px; position:relative; }
+  .pricing-card::before,.pricing-card::after { content:''; position:absolute; left:50%; transform:translateX(-50%); width:60%; height:1px; }
+  .pricing-card::before { top:-1px; background:linear-gradient(to right,transparent,var(--gold),transparent); }
+  .pricing-card::after { bottom:-1px; background:linear-gradient(to right,transparent,var(--gold),transparent); }
+  .badge { display:inline-block; background:var(--gold); color:var(--deep); font-family:'Cinzel',serif; font-size:0.6rem; letter-spacing:0.2em; padding:6px 18px; text-transform:uppercase; margin-bottom:30px; }
+  .price-old { font-size:1.1rem; color:var(--text-dim); text-decoration:line-through; margin-bottom:8px; }
+  .price-main { font-family:'Cormorant Garamond',serif; font-size:5rem; font-weight:300; color:var(--cream); line-height:1; margin-bottom:8px; }
+  .price-main sup { font-size:2rem; vertical-align:super; color:var(--gold); }
+  .price-note { font-size:0.82rem; color:var(--text-dim); margin-bottom:40px; }
+  .price-includes { list-style:none; text-align:left; margin-bottom:44px; }
+  .price-includes li { padding:10px 0; border-bottom:1px solid rgba(201,168,76,0.08); font-size:0.9rem; color:var(--text); display:flex; align-items:center; gap:12px; }
+  .price-includes li::before { content:'✦'; color:var(--gold); font-size:0.6rem; flex-shrink:0; }
+  .guarantee { max-width:500px; margin:40px auto 0; font-size:0.82rem; color:var(--text-dim); line-height:1.7; border-top:1px solid rgba(201,168,76,0.1); padding-top:30px; }
+  .guarantee strong { color:var(--gold); }
+
+  /* ── FOR WHOM ── */
+  .for-whom { padding:100px 24px; max-width:900px; margin:0 auto; }
+  .list-two-col { display:grid; grid-template-columns:1fr 1fr; gap:16px 60px; margin-top:50px; }
+  .list-item { padding:14px 0; border-bottom:1px solid rgba(201,168,76,0.1); font-size:0.9rem; color:var(--text); display:flex; gap:14px; align-items:flex-start; }
+  .list-item span { color:var(--gold); font-size:0.7rem; margin-top:3px; }
+
+  /* ── HOW IT WORKS ── */
+  .how-bg { background:var(--deep2); padding:100px 24px; }
+  .steps { max-width:700px; margin:60px auto 0; display:flex; flex-direction:column; }
+  .step { display:flex; gap:32px; padding:36px 0; border-bottom:1px solid rgba(201,168,76,0.08); }
+  .step:last-child { border-bottom:none; }
+  .step-num { font-family:'Cormorant Garamond',serif; font-size:3.5rem; font-weight:300; color:var(--gold); line-height:1; opacity:0.4; flex-shrink:0; width:60px; }
+  .step-content h3 { font-family:'Cormorant Garamond',serif; font-size:1.4rem; color:var(--cream); font-weight:400; margin-bottom:10px; }
+  .step-content p { font-size:0.88rem; color:var(--text-dim); line-height:1.8; }
+
+  /* ── FAQ ── */
+  .faq-section { padding:100px 24px; max-width:740px; margin:0 auto; }
+  .faq-item { border-bottom:1px solid rgba(201,168,76,0.1); padding:28px 0; }
+  .faq-q { font-family:'Cormorant Garamond',serif; font-size:1.2rem; color:var(--cream); font-weight:400; margin-bottom:14px; display:flex; justify-content:space-between; cursor:pointer; gap:20px; }
+  .faq-q span { color:var(--gold); font-size:1rem; flex-shrink:0; }
+  .faq-a { font-size:0.9rem; color:var(--text-dim); line-height:1.85; }
+
+  /* ── FOOTER ── */
+  footer { border-top:1px solid rgba(201,168,76,0.12); padding:60px 24px 40px; text-align:center; }
+  .footer-logo { font-family:'Cormorant Garamond',serif; font-size:1.8rem; color:var(--cream); letter-spacing:0.1em; margin-bottom:20px; }
+  .footer-logo em { color:var(--gold); font-style:italic; }
+  .footer-links { display:flex; gap:32px; justify-content:center; list-style:none; margin-bottom:32px; flex-wrap:wrap; }
+  .footer-links a { font-size:0.75rem; color:var(--text-dim); text-decoration:none; letter-spacing:0.1em; text-transform:uppercase; font-family:'Cinzel',serif; transition:color 0.2s; }
+  .footer-links a:hover { color:var(--gold); }
+  .footer-copy { font-size:0.75rem; color:var(--text-dim); opacity:0.5; }
+
+  /* ── FLOATING CTA ── */
+  .float-cta { position:fixed; bottom:30px; right:30px; z-index:100; opacity:0; transform:translateY(20px); transition:opacity 0.4s,transform 0.4s; pointer-events:none; }
+  .float-cta.visible { opacity:1; transform:translateY(0); pointer-events:all; }
+  .float-btn { display:block; padding:14px 30px; background:linear-gradient(135deg,var(--gold-dim),var(--gold)); color:var(--deep); font-family:'Cinzel',serif; font-size:0.7rem; letter-spacing:0.2em; text-decoration:none; text-transform:uppercase; box-shadow:0 4px 30px rgba(201,168,76,0.4); transition:transform 0.2s,box-shadow 0.2s; }
+  .float-btn:hover { transform:translateY(-2px); box-shadow:0 6px 40px rgba(201,168,76,0.6); }
+
+  /* ── SCROLL REVEAL ── */
+  .reveal { opacity:0; transform:translateY(40px); transition:opacity 0.8s ease,transform 0.8s ease; }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+
+  @media(max-width:600px) {
+    .list-two-col { grid-template-columns:1fr; }
+    .pricing-card { padding:40px 28px; }
+    .setup-banner { padding-top:48px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     SETUP BANNER — DELETE THIS AFTER GOING LIVE
+════════════════════════════════════════════════ -->
+<div class="setup-banner" id="setupBanner">
+  <p>⚙️ <strong>Setup Mode:</strong> Your buy buttons are not yet linked. <a onclick="openModal()">Click here for the 5-minute Stripe setup guide →</a></p>
+  <button class="setup-banner-close" onclick="document.getElementById('setupBanner').style.display='none'">Dismiss</button>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     STRIPE SETUP MODAL
+════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="setupModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">×</button>
+    <h2>Connect Stripe</h2>
+    <p class="sub">5 minutes. Free account. No code needed.</p>
+
+    <div class="step-block">
+      <div class="sn">Step 01</div>
+      <h3>Create a free Stripe account</h3>
+      <p>Go to <code>stripe.com</code> → Sign up → Complete identity verification (required to receive payouts). Takes ~10 minutes total.</p>
+    </div>
+
+    <div class="divider-modal"></div>
+
+    <div class="step-block">
+      <div class="sn">Step 02</div>
+      <h3>Create a Payment Link</h3>
+      <p>In your Stripe dashboard: <strong>Products → Payment Links → Create link</strong>.<br>
+      Set the price to <strong>$147</strong> (or your local currency). Product name: "Soul Blueprint". Add your description. Click <strong>Create link</strong>.</p>
+      <p class="note">Stripe gives you a link like: <code>buy.stripe.com/xxxxxxxx</code></p>
+    </div>
+
+    <div class="divider-modal"></div>
+
+    <div class="step-block">
+      <div class="sn">Step 03</div>
+      <h3>Paste your Stripe link here</h3>
+      <p>Copy your payment link from Stripe and paste it below. All buy buttons on the page will update instantly.</p>
+      <div class="field-row">
+        <input type="url" id="stripeInput" placeholder="https://buy.stripe.com/your-link-here">
+        <button class="apply-btn" onclick="applyStripeLink()">Apply</button>
+      </div>
+      <p class="note">The link is saved in this session. To make it permanent, open the HTML file in a text editor and replace <code>https://buy.stripe.com/6oUdR95SA7w96n0fC09oc03</code> with your link.</p>
+    </div>
+
+    <div class="divider-modal"></div>
+
+    <div class="step-block">
+      <div class="sn">Step 04 (optional but recommended)</div>
+      <h3>Add a redirect after payment</h3>
+      <p>In Stripe → Payment Link settings → <strong>After payment</strong> → set redirect to your Tally birth data form URL. This way customers automatically fill in their birth info after paying.</p>
+      <p class="note">Free Tally form: <code>tally.so</code> → Create 
+form → ask for: Full name, birth date, birth time, birth city, life 
+focus → Copy the link → paste it in Stripe's redirect field.</p>
+    </div>
+
+    <div class="divider-modal"></div>
+
+    <div class="step-block">
+      <div class="sn">Done</div>
+      <h3>You're live</h3>
+      <p>Delete the orange setup banner from the HTML, upload the file 
+to Netlify or GitHub Pages, and share the link. You're ready to take 
+your first order.</p>
+    </div>
+  </div>
+</div>
+
+<div class="starfield" id="starfield"><div class="star" style="width: 2.40643px; height: 2.40643px; left: 48.5061%; top: 19.0687%; --dur: 6.289495452409872s; --max-op: 0.8172948672939344; animation-delay: 3.56773s;"></div><div class="star" style="width: 0.681069px; height: 0.681069px; left: 38.1276%; top: 33.0676%; --dur: 2.214046463328787s; --max-op: 0.30306344314274336; animation-delay: 2.81468s;"></div><div class="star" style="width: 2.21069px; height: 2.21069px; left: 28.0851%; top: 58.7289%; --dur: 6.322107787032451s; --max-op: 0.2657604287543575; animation-delay: 4.94887s;"></div><div class="star" style="width: 1.82999px; height: 1.82999px; left: 78.5392%; top: 55.1084%; --dur: 4.673561813039615s; --max-op: 0.6966691327976454; animation-delay: 4.29916s;"></div><div class="star" style="width: 2.0919px; height: 2.0919px; left: 63.6682%; top: 55.2475%; --dur: 5.2236197828483455s; --max-op: 0.3417982454440529; animation-delay: 5.91705s;"></div><div class="star" style="width: 1.49665px; height: 1.49665px; left: 76.6627%; top: 47.6178%; --dur: 3.152792526960962s; --max-op: 0.5004592852833643; animation-delay: 2.44783s;"></div><div class="star" style="width: 1.48067px; height: 1.48067px; left: 89.6273%; top: 62.2644%; --dur: 2.565744372672165s; --max-op: 0.42540227114103224; animation-delay: 2.38189s;"></div><div class="star" style="width: 0.630301px; height: 0.630301px; left: 79.9515%; top: 55.0123%; --dur: 3.2077193775593016s; --max-op: 0.8377402612326588; animation-delay: 4.70894s;"></div><div class="star" style="width: 0.895897px; height: 0.895897px; left: 61.0348%; top: 44.7284%; --dur: 2.927247795468535s; --max-op: 0.41342996102013785; animation-delay: 1.66529s;"></div><div class="star" style="width: 1.7327px; height: 1.7327px; left: 12.8057%; top: 84.8503%; --dur: 5.147798535763494s; --max-op: 0.8201101140457345; animation-delay: 2.45892s;"></div><div class="star" style="width: 0.514123px; height: 0.514123px; left: 17.042%; top: 6.90578%; --dur: 5.961172270956659s; --max-op: 0.7197561974607649; animation-delay: 0.974678s;"></div><div class="star" style="width: 1.23153px; height: 1.23153px; left: 35.6436%; top: 73.449%; --dur: 5.95764686748085s; --max-op: 0.6621358623478568; animation-delay: 0.081551s;"></div><div class="star" style="width: 2.42004px; height: 2.42004px; left: 32.4099%; top: 44.8557%; --dur: 5.771976772125257s; --max-op: 0.8976425472116218; animation-delay: 2.05104s;"></div><div class="star" style="width: 1.96138px; height: 1.96138px; left: 15.553%; top: 62.0443%; --dur: 3.505545884580346s; --max-op: 0.8115643108365791; animation-delay: 2.83669s;"></div><div class="star" style="width: 1.6389px; height: 1.6389px; left: 11.2789%; top: 99.3681%; --dur: 4.461497338236542s; --max-op: 0.6226693585344345; animation-delay: 2.1517s;"></div><div class="star" style="width: 2.18204px; height: 2.18204px; left: 33.4811%; top: 84.1167%; --dur: 2.1468868181254788s; --max-op: 0.3073304975028369; animation-delay: 4.11395s;"></div><div class="star" style="width: 2.107px; height: 2.107px; left: 38.219%; top: 93.5478%; --dur: 6.64982532864183s; --max-op: 0.26214366163342695; animation-delay: 3.08905s;"></div><div class="star" style="width: 0.522182px; height: 0.522182px; left: 51.4153%; top: 77.1128%; --dur: 2.0146716583825635s; --max-op: 0.6801921399256778; animation-delay: 3.58889s;"></div><div class="star" style="width: 1.14859px; height: 1.14859px; left: 69.9771%; top: 15.712%; --dur: 3.0531735383118206s; --max-op: 0.38864509944775744; animation-delay: 0.29505s;"></div><div class="star" style="width: 1.82557px; height: 1.82557px; left: 53.352%; top: 9.18398%; --dur: 3.6720342378935937s; --max-op: 0.20285449488902643; animation-delay: 4.36509s;"></div><div class="star" style="width: 1.09752px; height: 1.09752px; left: 33.7489%; top: 33.2535%; --dur: 4.012944424672838s; --max-op: 0.5769787767646288; animation-delay: 5.13426s;"></div><div class="star" style="width: 1.74518px; height: 1.74518px; left: 73.1571%; top: 46.7602%; --dur: 2.2035282918742465s; --max-op: 0.6952884305343796; animation-delay: 2.90753s;"></div><div class="star" style="width: 0.705014px; height: 0.705014px; left: 30.1935%; top: 54.7313%; --dur: 4.586285864620541s; --max-op: 0.6906355491283247; animation-delay: 2.92024s;"></div><div class="star" style="width: 2.28809px; height: 2.28809px; left: 19.1163%; top: 97.3503%; --dur: 3.6882194862144755s; --max-op: 0.8275452661296674; animation-delay: 5.14263s;"></div><div class="star" style="width: 1.25769px; height: 1.25769px; left: 33.4703%; top: 75.2135%; --dur: 4.51698277308012s; --max-op: 0.5692423907850348; animation-delay: 3.66643s;"></div><div class="star" style="width: 1.11562px; height: 1.11562px; left: 91.6607%; top: 34.4727%; --dur: 6.914453514829567s; --max-op: 0.48052369189007316; animation-delay: 1.3407s;"></div><div class="star" style="width: 2.05626px; height: 2.05626px; left: 21.4663%; top: 84.9756%; --dur: 5.881193195357449s; --max-op: 0.5165488459168227; animation-delay: 5.69654s;"></div><div class="star" style="width: 2.34004px; height: 2.34004px; left: 91.0055%; top: 10.0307%; --dur: 3.620486063252388s; --max-op: 0.5791773148240658; animation-delay: 4.52277s;"></div><div class="star" style="width: 1.0253px; height: 1.0253px; left: 71.6918%; top: 69.0523%; --dur: 4.8684095845461615s; --max-op: 0.8826273016162973; animation-delay: 4.42399s;"></div><div class="star" style="width: 1.30532px; height: 1.30532px; left: 62.691%; top: 30.0727%; --dur: 3.5838954607191003s; --max-op: 0.6216628910899162; animation-delay: 5.49066s;"></div><div class="star" style="width: 1.98415px; height: 1.98415px; left: 33.3812%; top: 29.4999%; --dur: 6.8140524397485045s; --max-op: 0.5014587465600902; animation-delay: 1.97168s;"></div><div class="star" style="width: 0.632838px; height: 0.632838px; left: 4.30194%; top: 38.618%; --dur: 5.8602590462932245s; --max-op: 0.2474671848757164; animation-delay: 1.90397s;"></div><div class="star" style="width: 0.561432px; height: 0.561432px; left: 11.9755%; top: 83.5027%; --dur: 6.079133790922068s; --max-op: 0.5920659122462184; animation-delay: 3.66336s;"></div><div class="star" style="width: 1.43624px; height: 1.43624px; left: 0.688618%; top: 30.5668%; --dur: 6.125869397499545s; --max-op: 0.24371503825192192; animation-delay: 5.48192s;"></div><div class="star" style="width: 2.1505px; height: 2.1505px; left: 37.9188%; top: 15.4578%; --dur: 3.7525850430208174s; --max-op: 0.25464228927211613; animation-delay: 3.8632s;"></div><div class="star" style="width: 2.0652px; height: 2.0652px; left: 75.6916%; top: 36.5253%; --dur: 5.5664880170277s; --max-op: 0.6159643651902673; animation-delay: 4.98276s;"></div><div class="star" style="width: 0.674237px; height: 0.674237px; left: 42.4908%; top: 79.4351%; --dur: 4.170643512656872s; --max-op: 0.4443123509817839; animation-delay: 2.45865s;"></div><div class="star" style="width: 1.27343px; height: 1.27343px; left: 90.5613%; top: 33.3718%; --dur: 2.96362218693683s; --max-op: 0.3885591607384676; animation-delay: 4.45188s;"></div><div class="star" style="width: 1.9004px; height: 1.9004px; left: 44.3825%; top: 19.4266%; --dur: 4.3517350570695505s; --max-op: 0.3287725112385623; animation-delay: 3.04599s;"></div><div class="star" style="width: 2.17745px; height: 2.17745px; left: 79.1393%; top: 30.4631%; --dur: 6.326929875086082s; --max-op: 0.419784345229672; animation-delay: 1.31738s;"></div><div class="star" style="width: 1.42547px; height: 1.42547px; left: 47.4417%; top: 53.3721%; --dur: 5.067383637435973s; --max-op: 0.7310206854100094; animation-delay: 5.53745s;"></div><div class="star" style="width: 2.32978px; height: 2.32978px; left: 64.767%; top: 99.6884%; --dur: 5.934945365606557s; --max-op: 0.8721950597297792; animation-delay: 2.04712s;"></div><div class="star" style="width: 1.67596px; height: 1.67596px; left: 8.90732%; top: 27.0269%; --dur: 5.634586554572337s; --max-op: 0.7055453350203673; animation-delay: 0.717173s;"></div><div class="star" style="width: 0.520773px; height: 0.520773px; left: 45.4371%; top: 27.5346%; --dur: 6.285674584015887s; --max-op: 0.5654591371585087; animation-delay: 4.45714s;"></div><div class="star" style="width: 0.817749px; height: 0.817749px; left: 78.0804%; top: 75.7776%; --dur: 5.314261802247431s; --max-op: 0.4668327694453562; animation-delay: 5.18918s;"></div><div class="star" style="width: 1.90763px; height: 1.90763px; left: 15.2204%; top: 49.8542%; --dur: 6.89471707780603s; --max-op: 0.6193606488936185; animation-delay: 1.18069s;"></div><div class="star" style="width: 1.67993px; height: 1.67993px; left: 98.7721%; top: 29.093%; --dur: 6.211710649770985s; --max-op: 0.3387140379123479; animation-delay: 1.83556s;"></div><div class="star" style="width: 0.680106px; height: 0.680106px; left: 46.3998%; top: 26.0633%; --dur: 2.790837034350833s; --max-op: 0.4723586008595175; animation-delay: 3.64298s;"></div><div class="star" style="width: 1.34909px; height: 1.34909px; left: 35.0723%; top: 40.8809%; --dur: 3.8489430303531593s; --max-op: 0.6710441537946985; animation-delay: 4.30614s;"></div><div class="star" style="width: 2.46357px; height: 2.46357px; left: 42.4337%; top: 25.7038%; --dur: 5.684213337502335s; --max-op: 0.47446535259151934; animation-delay: 4.93297s;"></div><div class="star" style="width: 2.36809px; height: 2.36809px; left: 43.6404%; top: 86.4064%; --dur: 3.8859319274911632s; --max-op: 0.2612723983700658; animation-delay: 5.46894s;"></div><div class="star" style="width: 0.997184px; height: 0.997184px; left: 49.7165%; top: 32.4056%; --dur: 6.919246250270353s; --max-op: 0.6932631955765614; animation-delay: 1.00339s;"></div><div class="star" style="width: 0.846674px; height: 0.846674px; left: 20.7107%; top: 18.6858%; --dur: 6.061603266093027s; --max-op: 0.47287984382485726; animation-delay: 5.97268s;"></div><div class="star" style="width: 1.22203px; height: 1.22203px; left: 8.66489%; top: 18.4584%; --dur: 4.731567772222257s; --max-op: 0.8198646130648624; animation-delay: 3.51436s;"></div><div class="star" style="width: 0.888459px; height: 0.888459px; left: 42.622%; top: 26.8644%; --dur: 6.762830183964084s; --max-op: 0.7108998792743044; animation-delay: 4.50888s;"></div><div class="star" style="width: 2.48266px; height: 2.48266px; left: 63.9748%; top: 66.3669%; --dur: 5.879821107911022s; --max-op: 0.36139458432122895; animation-delay: 1.91727s;"></div><div class="star" style="width: 1.8119px; height: 1.8119px; left: 76.0942%; top: 10.969%; --dur: 5.609872139744161s; --max-op: 0.4247276903969466; animation-delay: 0.785976s;"></div><div class="star" style="width: 2.11304px; height: 2.11304px; left: 12.3486%; top: 55.4471%; --dur: 3.286843543175888s; --max-op: 0.6831919752796409; animation-delay: 4.43145s;"></div><div class="star" style="width: 2.30229px; height: 2.30229px; left: 77.2427%; top: 90.7906%; --dur: 3.631178218517963s; --max-op: 0.731763560051991; animation-delay: 2.99771s;"></div><div class="star" style="width: 0.657451px; height: 0.657451px; left: 25.3709%; top: 82.8855%; --dur: 3.4605061251221763s; --max-op: 0.8294984041094413; animation-delay: 2.16358s;"></div><div class="star" style="width: 2.01674px; height: 2.01674px; left: 48.0514%; top: 97.2285%; --dur: 2.7971865166670216s; --max-op: 0.5180621201793256; animation-delay: 2.03622s;"></div><div class="star" style="width: 2.1592px; height: 2.1592px; left: 31.1707%; top: 42.0608%; --dur: 4.275401238264633s; --max-op: 0.5086081971036859; animation-delay: 4.87177s;"></div><div class="star" style="width: 1.27678px; height: 1.27678px; left: 14.8233%; top: 90.3628%; --dur: 5.972490646813274s; --max-op: 0.33683724274572013; animation-delay: 2.72516s;"></div><div class="star" style="width: 0.842922px; height: 0.842922px; left: 38.3252%; top: 60.6619%; --dur: 6.463334399753699s; --max-op: 0.6400266172534538; animation-delay: 2.85327s;"></div><div class="star" style="width: 0.77741px; height: 0.77741px; left: 35.8932%; top: 28.6044%; --dur: 3.5454382892029646s; --max-op: 0.7529576290903814; animation-delay: 4.09291s;"></div><div class="star" style="width: 1.40029px; height: 1.40029px; left: 10.363%; top: 96.7035%; --dur: 4.300048821506197s; --max-op: 0.5432293830973755; animation-delay: 2.71466s;"></div><div class="star" style="width: 1.10684px; height: 1.10684px; left: 21.1407%; top: 80.3383%; --dur: 3.4935162173490486s; --max-op: 0.38437934474629076; animation-delay: 0.43405s;"></div><div class="star" style="width: 1.10886px; height: 1.10886px; left: 58.1275%; top: 85.8093%; --dur: 2.943646457416756s; --max-op: 0.5567312865273404; animation-delay: 0.660247s;"></div><div class="star" style="width: 1.34044px; height: 1.34044px; left: 58.7969%; top: 42.8189%; --dur: 3.4398688957484236s; --max-op: 0.6627023891498169; animation-delay: 3.40729s;"></div><div class="star" style="width: 1.34375px; height: 1.34375px; left: 6.95828%; top: 91.872%; --dur: 6.5130585480514736s; --max-op: 0.31824814929282397; animation-delay: 0.454829s;"></div><div class="star" style="width: 1.11486px; height: 1.11486px; left: 89.2944%; top: 71.3122%; --dur: 2.0103310671913937s; --max-op: 0.24544001702774149; animation-delay: 1.67853s;"></div><div class="star" style="width: 0.519772px; height: 0.519772px; left: 34.8465%; top: 31.9672%; --dur: 6.230867701740701s; --max-op: 0.20867141631520286; animation-delay: 0.10666s;"></div><div class="star" style="width: 0.760218px; height: 0.760218px; left: 17.245%; top: 14.1614%; --dur: 5.75531149444271s; --max-op: 0.31853174410448; animation-delay: 2.77196s;"></div><div class="star" style="width: 1.40276px; height: 1.40276px; left: 11.5967%; top: 18.6064%; --dur: 3.1712945748188996s; --max-op: 0.5821457012637468; animation-delay: 0.569477s;"></div><div class="star" style="width: 1.05002px; height: 1.05002px; left: 21.3049%; top: 30.3911%; --dur: 5.058340955587653s; --max-op: 0.8912650450309241; animation-delay: 4.08855s;"></div><div class="star" style="width: 1.45877px; height: 1.45877px; left: 23.0618%; top: 1.37615%; --dur: 4.4641713015605475s; --max-op: 0.7687073489275451; animation-delay: 4.5894s;"></div><div class="star" style="width: 1.65456px; height: 1.65456px; left: 92.4614%; top: 88.452%; --dur: 5.834522387039903s; --max-op: 0.7527620976435476; animation-delay: 0.325122s;"></div><div class="star" style="width: 1.64382px; height: 1.64382px; left: 41.5066%; top: 57.6403%; --dur: 6.819853328090507s; --max-op: 0.4009499095088626; animation-delay: 2.1305s;"></div><div class="star" style="width: 0.833278px; height: 0.833278px; left: 6.74099%; top: 6.29731%; --dur: 6.905126467726866s; --max-op: 0.3219384416116944; animation-delay: 3.35373s;"></div><div class="star" style="width: 1.06587px; height: 1.06587px; left: 43.7553%; top: 55.0122%; --dur: 5.719001201308595s; --max-op: 0.4481818064257037; animation-delay: 1.61533s;"></div><div class="star" style="width: 1.9672px; height: 1.9672px; left: 17.7381%; top: 57.4502%; --dur: 6.287335603047401s; --max-op: 0.574697434351928; animation-delay: 0.455845s;"></div><div class="star" style="width: 0.766484px; height: 0.766484px; left: 58.4177%; top: 69.3284%; --dur: 4.01215753779893s; --max-op: 0.795842999198467; animation-delay: 5.10486s;"></div><div class="star" style="width: 0.600939px; height: 0.600939px; left: 12.079%; top: 79.5979%; --dur: 6.648456469205205s; --max-op: 0.2807263236180677; animation-delay: 3.62443s;"></div><div class="star" style="width: 1.69157px; height: 1.69157px; left: 92.4795%; top: 96.5899%; --dur: 5.4107263203731994s; --max-op: 0.587303169465371; animation-delay: 3.84354s;"></div><div class="star" style="width: 0.708865px; height: 0.708865px; left: 32.4805%; top: 73.5798%; --dur: 5.832595521733333s; --max-op: 0.33905645935995943; animation-delay: 0.674546s;"></div><div class="star" style="width: 1.37329px; height: 1.37329px; left: 62.1435%; top: 6.87334%; --dur: 4.456062373956273s; --max-op: 0.722226759570656; animation-delay: 2.13774s;"></div><div class="star" style="width: 2.21544px; height: 2.21544px; left: 55.0461%; top: 90.5921%; --dur: 4.613417836907251s; --max-op: 0.5744186365854077; animation-delay: 3.38948s;"></div><div class="star" style="width: 1.04865px; height: 1.04865px; left: 1.09556%; top: 62.4018%; --dur: 2.304923147452021s; --max-op: 0.8146681277859666; animation-delay: 0.953328s;"></div><div class="star" style="width: 0.543705px; height: 0.543705px; left: 50.3625%; top: 82.9099%; --dur: 5.220867611077474s; --max-op: 0.5628251530772916; animation-delay: 4.7683s;"></div><div class="star" style="width: 0.794316px; height: 0.794316px; left: 96.8472%; top: 94.2105%; --dur: 6.704818734002171s; --max-op: 0.7940514127930143; animation-delay: 5.51024s;"></div><div class="star" style="width: 1.01417px; height: 1.01417px; left: 50.3479%; top: 34.784%; --dur: 5.020593463987944s; --max-op: 0.3649389096810419; animation-delay: 4.65331s;"></div><div class="star" style="width: 1.26785px; height: 1.26785px; left: 59.8663%; top: 26.1861%; --dur: 3.873436979631799s; --max-op: 0.8105858558749341; animation-delay: 3.3833s;"></div><div class="star" style="width: 0.539196px; height: 0.539196px; left: 53.8139%; top: 19.5266%; --dur: 5.616549499369223s; --max-op: 0.2720732495790975; animation-delay: 3.55869s;"></div><div class="star" style="width: 1.62085px; height: 1.62085px; left: 66.8925%; top: 48.4268%; --dur: 5.427953653906332s; --max-op: 0.5308719066779983; animation-delay: 4.05891s;"></div><div class="star" style="width: 1.2657px; height: 1.2657px; left: 94.049%; top: 15.3591%; --dur: 6.196249156505441s; --max-op: 0.42503551272601725; animation-delay: 2.24844s;"></div><div class="star" style="width: 2.39963px; height: 2.39963px; left: 59.6597%; top: 97.7496%; --dur: 4.582532633860467s; --max-op: 0.5868521417320367; animation-delay: 5.2174s;"></div><div class="star" style="width: 0.743917px; height: 0.743917px; left: 46.9484%; top: 0.221589%; --dur: 4.991336986760693s; --max-op: 0.7763812296462351; animation-delay: 2.39966s;"></div><div class="star" style="width: 2.26858px; height: 2.26858px; left: 45.3694%; top: 67.3427%; --dur: 4.125152880143296s; --max-op: 0.5088693889725309; animation-delay: 5.73922s;"></div><div class="star" style="width: 1.66622px; height: 1.66622px; left: 99.975%; top: 32.8715%; --dur: 2.9515554620892406s; --max-op: 0.40662467312065803; animation-delay: 2.20883s;"></div><div class="star" style="width: 1.84946px; height: 1.84946px; left: 65.9912%; top: 80.787%; --dur: 5.861490238444301s; --max-op: 0.27647402434688645; animation-delay: 5.4395s;"></div><div class="star" style="width: 0.632198px; height: 0.632198px; left: 15.8866%; top: 80.6893%; --dur: 5.177749724327574s; --max-op: 0.2728977464119876; animation-delay: 0.337441s;"></div><div class="star" style="width: 1.208px; height: 1.208px; left: 74.0926%; top: 83.8498%; --dur: 3.412632195398151s; --max-op: 0.696521415183758; animation-delay: 4.3849s;"></div><div class="star" style="width: 1.50912px; height: 1.50912px; left: 90.563%; top: 1.54636%; --dur: 5.945109544135309s; --max-op: 0.5702027235500733; animation-delay: 1.36618s;"></div><div class="star" style="width: 2.25071px; height: 2.25071px; left: 10.2545%; top: 93.0763%; --dur: 6.823725877650436s; --max-op: 0.22123582311590534; animation-delay: 0.0638701s;"></div><div class="star" style="width: 2.00976px; height: 2.00976px; left: 44.7668%; top: 55.1943%; --dur: 6.289025287014613s; --max-op: 0.3131892293106582; animation-delay: 5.64748s;"></div><div class="star" style="width: 2.40979px; height: 2.40979px; left: 92.1579%; top: 95.8769%; --dur: 4.466116313814489s; --max-op: 0.6416045584356891; animation-delay: 1.34772s;"></div><div class="star" style="width: 1.8398px; height: 1.8398px; left: 11.9686%; top: 13.8392%; --dur: 6.038046690347713s; --max-op: 0.38196257512629816; animation-delay: 4.85743s;"></div><div class="star" style="width: 1.26513px; height: 1.26513px; left: 16.1063%; top: 87.2544%; --dur: 3.6107148793164416s; --max-op: 0.5612744543070256; animation-delay: 0.522429s;"></div><div class="star" style="width: 1.53304px; height: 1.53304px; left: 55.2966%; top: 47.4218%; --dur: 6.202069003927694s; --max-op: 0.3066447074200189; animation-delay: 2.90777s;"></div><div class="star" style="width: 1.32104px; height: 1.32104px; left: 82.986%; top: 73.6202%; --dur: 3.1562055723673788s; --max-op: 0.7876973649760601; animation-delay: 4.74986s;"></div><div class="star" style="width: 2.32682px; height: 2.32682px; left: 21.6277%; top: 31.4687%; --dur: 3.1716513329650633s; --max-op: 0.3548859469820317; animation-delay: 4.3876s;"></div><div class="star" style="width: 0.946494px; height: 0.946494px; left: 81.6659%; top: 98.7546%; --dur: 5.763465544450207s; --max-op: 0.7165871582029877; animation-delay: 0.368073s;"></div><div class="star" style="width: 0.772524px; height: 0.772524px; left: 99.8867%; top: 68.8332%; --dur: 5.988165521866939s; --max-op: 0.42927884399056193; animation-delay: 5.86185s;"></div><div class="star" style="width: 2.35353px; height: 2.35353px; left: 16.7569%; top: 3.1683%; --dur: 4.747079102828985s; --max-op: 0.5795048696557408; animation-delay: 5.58666s;"></div><div class="star" style="width: 0.729119px; height: 0.729119px; left: 15.8242%; top: 97.2151%; --dur: 3.1518925471298087s; --max-op: 0.49617369090487784; animation-delay: 1.09729s;"></div><div class="star" style="width: 2.44752px; height: 2.44752px; left: 56.4417%; top: 90.1436%; --dur: 6.62074451517431s; --max-op: 0.4539891809801183; animation-delay: 2.02207s;"></div><div class="star" style="width: 1.81986px; height: 1.81986px; left: 57.2375%; top: 24.4103%; --dur: 5.645550274210819s; --max-op: 0.5221971155540465; animation-delay: 1.71557s;"></div><div class="star" style="width: 1.74382px; height: 1.74382px; left: 75.3433%; top: 75.9094%; --dur: 5.266466418029346s; --max-op: 0.4827515396404199; animation-delay: 5.86567s;"></div><div class="star" style="width: 1.91995px; height: 1.91995px; left: 55.3079%; top: 92.4099%; --dur: 2.2791584508986378s; --max-op: 0.6984259096158728; animation-delay: 2.04214s;"></div><div class="star" style="width: 1.04805px; height: 1.04805px; left: 49.058%; top: 88.2649%; --dur: 6.772087302305007s; --max-op: 0.7837757389548214; animation-delay: 5.00317s;"></div><div class="star" style="width: 1.05915px; height: 1.05915px; left: 6.84114%; top: 44.0349%; --dur: 6.854044679653898s; --max-op: 0.8755768409425324; animation-delay: 3.60749s;"></div><div class="star" style="width: 0.91318px; height: 0.91318px; left: 54.9524%; top: 23.0503%; --dur: 3.3615041869688715s; --max-op: 0.47975528770576875; animation-delay: 5.67508s;"></div><div class="star" style="width: 2.34657px; height: 2.34657px; left: 0.89123%; top: 95.751%; --dur: 3.2230395012815687s; --max-op: 0.704390301062167; animation-delay: 1.18419s;"></div><div class="star" style="width: 1.47696px; height: 1.47696px; left: 85.1137%; top: 35.2911%; --dur: 5.68622945129049s; --max-op: 0.6137937552961841; animation-delay: 0.825431s;"></div><div class="star" style="width: 2.34704px; height: 2.34704px; left: 16.2046%; top: 36.4221%; --dur: 2.4565104525405883s; --max-op: 0.8612795185440567; animation-delay: 2.98412s;"></div><div class="star" style="width: 0.841261px; height: 0.841261px; left: 21.772%; top: 14.2274%; --dur: 5.77325839641757s; --max-op: 0.2515871650715732; animation-delay: 1.22115s;"></div><div class="star" style="width: 1.65295px; height: 1.65295px; left: 80.5772%; top: 11.6038%; --dur: 6.242990249693531s; --max-op: 0.45196656084469444; animation-delay: 5.45852s;"></div><div class="star" style="width: 2.16385px; height: 2.16385px; left: 12.7832%; top: 59.8853%; --dur: 4.3988980151846s; --max-op: 0.5315135745279143; animation-delay: 0.0543372s;"></div><div class="star" style="width: 2.05581px; height: 2.05581px; left: 41.973%; top: 55.8386%; --dur: 2.4138585960964s; --max-op: 0.8305935196169318; animation-delay: 1.99167s;"></div><div class="star" style="width: 2.0498px; height: 2.0498px; left: 76.9513%; top: 88.0292%; --dur: 3.4045675981214627s; --max-op: 0.8947508090379672; animation-delay: 1.76689s;"></div><div class="star" style="width: 1.27687px; height: 1.27687px; left: 45.5229%; top: 54.2351%; --dur: 3.584361296817502s; --max-op: 0.5396660680801633; animation-delay: 5.95801s;"></div><div class="star" style="width: 1.50912px; height: 1.50912px; left: 41.0864%; top: 43.1219%; --dur: 3.8514239851772234s; --max-op: 0.7355887214229739; animation-delay: 2.44061s;"></div><div class="star" style="width: 1.46939px; height: 1.46939px; left: 38.1476%; top: 90.7349%; --dur: 5.21634657540362s; --max-op: 0.2319692460640833; animation-delay: 1.64539s;"></div><div class="star" style="width: 0.830256px; height: 0.830256px; left: 63.7167%; top: 0.939417%; --dur: 3.2863557460439177s; --max-op: 0.3312910140143383; animation-delay: 4.35304s;"></div><div class="star" style="width: 0.589231px; height: 0.589231px; left: 40.903%; top: 16.5569%; --dur: 5.03821128776546s; --max-op: 0.4537375656390805; animation-delay: 0.513347s;"></div><div class="star" style="width: 1.18171px; height: 1.18171px; left: 79.9856%; top: 83.8447%; --dur: 4.439065451247808s; --max-op: 0.6925487602497991; animation-delay: 0.068941s;"></div><div class="star" style="width: 0.610198px; height: 0.610198px; left: 52.3625%; top: 69.5686%; --dur: 5.640818505501669s; --max-op: 0.408189473126252; animation-delay: 2.56586s;"></div><div class="star" style="width: 1.4333px; height: 1.4333px; left: 99.2329%; top: 26.5908%; --dur: 6.642326558685097s; --max-op: 0.5901693592564706; animation-delay: 1.24731s;"></div><div class="star" style="width: 1.0618px; height: 1.0618px; left: 12.4047%; top: 24.4665%; --dur: 6.890995380533326s; --max-op: 0.20923025507978132; animation-delay: 2.28431s;"></div><div class="star" style="width: 1.93536px; height: 1.93536px; left: 90.3962%; top: 75.0388%; --dur: 2.4625745622026085s; --max-op: 0.6062793217856062; animation-delay: 1.97172s;"></div><div class="star" style="width: 1.37889px; height: 1.37889px; left: 71.4962%; top: 23.875%; --dur: 2.687256156303225s; --max-op: 0.33231286873395816; animation-delay: 3.29434s;"></div><div class="star" style="width: 2.48286px; height: 2.48286px; left: 3.48398%; top: 91.541%; --dur: 5.229290606688228s; --max-op: 0.7280198669098568; animation-delay: 0.0691955s;"></div><div class="star" style="width: 0.522063px; height: 0.522063px; left: 72.5586%; top: 61.0683%; --dur: 3.9685170755738097s; --max-op: 0.3272602084659152; animation-delay: 3.92691s;"></div><div class="star" style="width: 2.31076px; height: 2.31076px; left: 90.4264%; top: 97.9807%; --dur: 3.5992507697517806s; --max-op: 0.3325134113695443; animation-delay: 2.52546s;"></div><div class="star" style="width: 1.69727px; height: 1.69727px; left: 64.5694%; top: 72.3044%; --dur: 3.3007632944742524s; --max-op: 0.6621561680480463; animation-delay: 1.91278s;"></div><div class="star" style="width: 1.35247px; height: 1.35247px; left: 66.4927%; top: 90.8872%; --dur: 4.415460239413493s; --max-op: 0.7246303784528119; animation-delay: 2.67799s;"></div><div class="star" style="width: 1.00982px; height: 1.00982px; left: 99.6134%; top: 85.9291%; --dur: 4.793042570801263s; --max-op: 0.636161557251725; animation-delay: 2.7618s;"></div><div class="star" style="width: 1.11674px; height: 1.11674px; left: 74.5829%; top: 12.4732%; --dur: 6.172375481241488s; --max-op: 0.6419299336247417; animation-delay: 1.52265s;"></div><div class="star" style="width: 1.94893px; height: 1.94893px; left: 98.5292%; top: 10.9312%; --dur: 5.171976302826097s; --max-op: 0.6140940751669506; animation-delay: 0.63092s;"></div><div class="star" style="width: 1.14264px; height: 1.14264px; left: 91.9936%; top: 73.3141%; --dur: 6.444494916965515s; --max-op: 0.870944401283229; animation-delay: 5.6489s;"></div><div class="star" style="width: 0.850599px; height: 0.850599px; left: 88.6233%; top: 2.03911%; --dur: 3.8412052528839373s; --max-op: 0.5875678296893156; animation-delay: 1.34116s;"></div><div class="star" style="width: 0.690049px; height: 0.690049px; left: 91.7975%; top: 53.3532%; --dur: 4.751466788143324s; --max-op: 0.2447396249495158; animation-delay: 1.52497s;"></div><div class="star" style="width: 2.06947px; height: 2.06947px; left: 60.0572%; top: 21.0758%; --dur: 5.650473629682486s; --max-op: 0.46986226833088784; animation-delay: 2.1976s;"></div><div class="star" style="width: 2.13868px; height: 2.13868px; left: 19.0043%; top: 71.8484%; --dur: 4.300910042981555s; --max-op: 0.5844985231997405; animation-delay: 3.69443s;"></div><div class="star" style="width: 2.401px; height: 2.401px; left: 93.1017%; top: 67.4926%; --dur: 6.236886935310981s; --max-op: 0.8249463440796367; animation-delay: 4.64704s;"></div><div class="star" style="width: 1.38472px; height: 1.38472px; left: 61.8923%; top: 53.6266%; --dur: 6.920783130962752s; --max-op: 0.3428011098723556; animation-delay: 0.746399s;"></div><div class="star" style="width: 1.1658px; height: 1.1658px; left: 93.2374%; top: 5.91573%; --dur: 2.8214254322365298s; --max-op: 0.45451093528273073; animation-delay: 0.0943911s;"></div><div class="star" style="width: 1.26915px; height: 1.26915px; left: 64.8706%; top: 11.1738%; --dur: 4.607633002538339s; --max-op: 0.5380821804879525; animation-delay: 4.8896s;"></div><div class="star" style="width: 1.91957px; height: 1.91957px; left: 5.3611%; top: 47.7053%; --dur: 4.995489109335079s; --max-op: 0.3985616141253733; animation-delay: 4.34813s;"></div><div class="star" style="width: 1.43163px; height: 1.43163px; left: 13.506%; top: 12.1253%; --dur: 5.740146953301049s; --max-op: 0.48932023227708055; animation-delay: 5.43908s;"></div><div class="star" style="width: 1.86547px; height: 1.86547px; left: 72.0021%; top: 62.1011%; --dur: 2.0383610308954117s; --max-op: 0.7781893574763274; animation-delay: 1.33703s;"></div><div class="star" style="width: 1.56466px; height: 1.56466px; left: 43.8442%; top: 77.9164%; --dur: 2.858367494254249s; --max-op: 0.4506351731234264; animation-delay: 2.24721s;"></div><div class="star" style="width: 1.68539px; height: 1.68539px; left: 73.6337%; top: 67.1832%; --dur: 3.5669732574417976s; --max-op: 0.6227046779297092; animation-delay: 1.07866s;"></div><div class="star" style="width: 1.07031px; height: 1.07031px; left: 21.3856%; top: 85.7191%; --dur: 2.154447448709859s; --max-op: 0.6156241957625581; animation-delay: 1.3429s;"></div><div class="star" style="width: 2.02249px; height: 2.02249px; left: 78.8559%; top: 91.0411%; --dur: 6.428562802944725s; --max-op: 0.8930607497187741; animation-delay: 3.7339s;"></div><div class="star" style="width: 1.38284px; height: 1.38284px; left: 6.04531%; top: 95.1476%; --dur: 5.071262274889644s; --max-op: 0.5186584443459599; animation-delay: 4.63986s;"></div><div class="star" style="width: 1.85899px; height: 1.85899px; left: 31.7438%; top: 6.4974%; --dur: 4.424607865287847s; --max-op: 0.4738674852709185; animation-delay: 5.26948s;"></div><div class="star" style="width: 1.15538px; height: 1.15538px; left: 49.1038%; top: 76.4391%; --dur: 2.871925200022741s; --max-op: 0.4469536293477341; animation-delay: 2.59153s;"></div><div class="star" style="width: 0.786888px; height: 0.786888px; left: 50.9454%; top: 67.3351%; --dur: 3.0425496082690273s; --max-op: 0.2842448692055846; animation-delay: 5.62627s;"></div><div class="star" style="width: 1.61429px; height: 1.61429px; left: 38.2022%; top: 58.8223%; --dur: 5.866342983232302s; --max-op: 0.4697008393650401; animation-delay: 4.449s;"></div><div class="star" style="width: 2.43754px; height: 2.43754px; left: 96.5979%; top: 96.7924%; --dur: 2.494703370216127s; --max-op: 0.34684300453683714; animation-delay: 3.57515s;"></div><div class="star" style="width: 0.718836px; height: 0.718836px; left: 13.8905%; top: 95.513%; --dur: 4.439224179682535s; --max-op: 0.2571456090555462; animation-delay: 4.87202s;"></div><div class="star" style="width: 2.3513px; height: 2.3513px; left: 2.57462%; top: 78.6732%; --dur: 4.13150618202722s; --max-op: 0.36513116124420286; animation-delay: 5.04553s;"></div><div class="star" style="width: 1.03454px; height: 1.03454px; left: 42.702%; top: 8.1262%; --dur: 6.510036539674134s; --max-op: 0.46487272983540384; animation-delay: 4.51587s;"></div><div class="star" style="width: 0.965728px; height: 0.965728px; left: 38.7186%; top: 86.9655%; --dur: 5.617607746376208s; --max-op: 0.4308792955512092; animation-delay: 1.52167s;"></div><div class="star" style="width: 1.04003px; height: 1.04003px; left: 18.3347%; top: 60.1893%; --dur: 3.749516979844485s; --max-op: 0.6834156398040734; animation-delay: 2.53551s;"></div><div class="star" style="width: 1.17286px; height: 1.17286px; left: 97.4477%; top: 40.8834%; --dur: 4.363465956733469s; --max-op: 0.83770766573945; animation-delay: 1.91305s;"></div><div class="star" style="width: 0.801255px; height: 0.801255px; left: 92.4188%; top: 99.4618%; --dur: 4.863821176634461s; --max-op: 0.5735050634291237; animation-delay: 1.93028s;"></div><div class="star" style="width: 1.57494px; height: 1.57494px; left: 41.721%; top: 99.8877%; --dur: 4.59436295949081s; --max-op: 0.5726272104829729; animation-delay: 1.79501s;"></div><div class="star" style="width: 2.47567px; height: 2.47567px; left: 0.115432%; top: 24.4042%; --dur: 2.7527453547036784s; --max-op: 0.2548225645129584; animation-delay: 4.93981s;"></div></div>
+
+<div class="float-cta" id="floatCta">
+  <a href="https://buy.stripe.com/6oUdR95SA7w96n0fC09oc03" class="float-btn" id="floatBtn" target="_blank" rel="noopener">Get My Blueprint →</a>
+</div>
+
+<!-- ══════════════════════════════════════════════ HERO -->
+<header>
+  <svg class="mandala" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="200" cy="200" r="180" stroke="#c9a84c" stroke-width="0.5"></circle>
+    <circle cx="200" cy="200" r="140" stroke="#c9a84c" stroke-width="0.5"></circle>
+    <circle cx="200" cy="200" r="100" stroke="#c9a84c" stroke-width="0.5"></circle>
+    <circle cx="200" cy="200" r="60" stroke="#c9a84c" stroke-width="0.5"></circle>
+    <circle cx="200" cy="200" r="20" stroke="#c9a84c" stroke-width="0.5"></circle>
+    <line x1="200" y1="20" x2="200" y2="380" stroke="#c9a84c" stroke-width="0.4"></line>
+    <line x1="20" y1="200" x2="380" y2="200" stroke="#c9a84c" stroke-width="0.4"></line>
+    <line x1="73" y1="73" x2="327" y2="327" stroke="#c9a84c" stroke-width="0.4"></line>
+    <line x1="327" y1="73" x2="73" y2="327" stroke="#c9a84c" stroke-width="0.4"></line>
+    <polygon points="200,40 240,120 320,120 260,170 280,260 200,210 120,260 140,170 80,120 160,120" stroke="#c9a84c" stroke-width="0.5" fill="none"></polygon>
+    <circle cx="200" cy="40" r="4" stroke="#c9a84c" stroke-width="0.5"></circle>
+    <circle cx="200" cy="360" r="4" stroke="#c9a84c" stroke-width="0.5"></circle>
+    <circle cx="40" cy="200" r="4" stroke="#c9a84c" stroke-width="0.5"></circle>
+    <circle cx="360" cy="200" r="4" stroke="#c9a84c" stroke-width="0.5"></circle>
+    <circle cx="73" cy="73" r="4" stroke="#c9a84c" stroke-width="0.5"></circle>
+    <circle cx="327" cy="73" r="4" stroke="#c9a84c" stroke-width="0.5"></circle>
+    <circle cx="73" cy="327" r="4" stroke="#c9a84c" stroke-width="0.5"></circle>
+    <circle cx="327" cy="327" r="4" stroke="#c9a84c" stroke-width="0.5"></circle>
+  </svg>
+  <svg class="mandala2" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="200" cy="200" r="190" stroke="#c9a84c" stroke-width="0.8"></circle>
+    <polygon points="200,30 370,290 30,290" stroke="#c9a84c" stroke-width="0.6" fill="none"></polygon>
+    <polygon points="200,370 30,110 370,110" stroke="#c9a84c" stroke-width="0.6" fill="none"></polygon>
+    <circle cx="200" cy="200" r="80" stroke="#c9a84c" stroke-width="0.6"></circle>
+    <path d="M200,120 Q260,160 260,200 Q260,240 200,280 Q140,240 140,200 Q140,160 200,120Z" stroke="#c9a84c" stroke-width="0.5" fill="none"></path>
+  </svg>
+
+  <p class="eyebrow">The Complete Cosmic Identity System</p>
+  <h1>Soul<br><em>Blueprint</em></h1>
+  <p class="hero-sub">Eleven ancient &amp; modern systems. One complete map of who you are — and why you're here.</p>
+  <div class="cta-wrap">
+    <a href="https://buy.stripe.com/6oUdR95SA7w96n0fC09oc03" class="cta-btn buy-btn" target="_blank" rel="noopener">Reveal My Blueprint</a>
+    <p class="price-hint"><s>$297</s> &nbsp;→&nbsp; <strong>$147 today only</strong></p>
+  </div>
+  <div class="scroll-cue"><div class="scroll-line"></div>Discover</div>
+</header>
+
+<!-- ══════════════════════════════════════════════ WHAT IS IT -->
+<section class="section">
+  <div class="reveal visible">
+    <p class="section-label">What is the Soul Blueprint?</p>
+    <h2>You are not one thing.<br><em>You are a universe.</em></h2>
+    <p class="section-intro">Most personality tests show you a single 
+lens. The Soul Blueprint layers eleven powerful systems — ancient wisdom
+ and modern psychology — into one cohesive, personalized document. The 
+result? Clarity you've never had before.</p>
+  </div>
+</section>
+
+<div class="divider"><div class="divider-line"></div><div class="divider-gem">✦</div><div class="divider-line"></div></div>
+
+<!-- ══════════════════════════════════════════════ SYSTEMS -->
+<div style="max-width:1200px;margin:0 auto;padding:0 24px 100px;">
+  <div class="systems-grid reveal visible">
+    <div class="system-card"><span class="system-icon">☿</span><div class="system-name">System 01</div><div class="system-title">Astrology</div><p class="system-desc">Your
+ natal chart decoded — Sun, Moon, Rising, and all planetary placements. 
+Understand your core drives, emotional nature, and soul's direction.</p></div>
+    <div class="system-card"><span class="system-icon">⬡</span><div class="system-name">System 02</div><div class="system-title">Human Design</div><p class="system-desc">Your
+ energetic type, authority, and defined centers. Learn how you're 
+designed to make decisions and interact with the world authentically.</p></div>
+    <div class="system-card"><span class="system-icon">∞</span><div class="system-name">System 03</div><div class="system-title">Numerology</div><p class="system-desc">Life Path, Expression, Soul Urge, and Personal Year numbers reveal the rhythm and purpose woven into your birth name and date.</p></div>
+    <div class="system-card"><span class="system-icon">◎</span><div class="system-name">System 04</div><div class="system-title">Enneagram</div><p class="system-desc">Your
+ core type, wing, and integration path. Uncover your deepest 
+motivations, fears, and the unconscious patterns shaping your behavior.</p></div>
+    <div class="system-card"><span class="system-icon">⬢</span><div class="system-name">System 05</div><div class="system-title">Jungian Archetypes</div><p class="system-desc">Your
+ dominant and shadow archetypes through a Jungian lens — the Hero, the 
+Sage, the Lover — and how they play out in your life story.</p></div>
+    <div class="system-card"><span class="system-icon">✦</span><div class="system-name">System 06</div><div class="system-title">Gene Keys</div><p class="system-desc">Your
+ Activation, Venus, and Pearl sequences. A poetic, transformative map of
+ your gifts, challenges, and highest potential frequencies.</p></div>
+    <div class="system-card"><span class="system-icon">☯</span><div class="system-name">System 07</div><div class="system-title">I Ching</div><p class="system-desc">Your
+ birth hexagram and moving line reveal the ancient Book of Changes' 
+wisdom applied to your personal life path and transformation.</p></div>
+    <div class="system-card"><span class="system-icon">◉</span><div class="system-name">System 08</div><div class="system-title">Chakra Profile</div><p class="system-desc">All seven energy centers scored and mapped — your dominant chakra, developing areas, and embodiment practices for alignment.</p></div>
+    <div class="system-card"><span class="system-icon">◈</span><div class="system-name">System 09</div><div class="system-title">Birth Tarot</div><p class="system-desc">Your birth card, year card, and court card from the Major Arcana — the mythic archetypes woven into your soul's journey.</p></div>
+    <div class="system-card"><span class="system-icon">龍</span><div class="system-name">System 10</div><div class="system-title">Chinese Astrology</div><p class="system-desc">Your animal sign, element, and polarity in the Eastern zodiac — compatibility, strengths, and your 2025 outlook.</p></div>
+    <div class="system-card"><span class="system-icon">✧</span><div class="system-name">System 11</div><div class="system-title">Cosmic Synthesis</div><p class="system-desc">Where
+ all systems converge. Recurring themes, your core paradox, and the 
+patterns only visible when the full picture comes together.</p></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════ WHAT YOU GET -->
+<div class="features-bg">
+  <div class="features-inner reveal">
+    <p class="section-label">What's Included</p>
+    <h2>Everything in your <em>full package</em></h2>
+    <div class="features-grid">
+      <div class="feature-item"><div class="feature-num">01</div><div class="feature-text"><h3>60+ Page Personalized PDF Report</h3><p>A beautifully designed, deeply personal document covering all 11 systems with your unique data and interpretations.</p></div></div>
+      <div class="feature-item"><div class="feature-num">02</div><div class="feature-text"><h3>Cross-System Theme Analysis</h3><p>We surface the dominant themes appearing across multiple systems — the real insights hiding in the patterns.</p></div></div>
+      <div class="feature-item"><div class="feature-num">03</div><div class="feature-text"><h3>Soul Gifts &amp; Shadow Work Guide</h3><p>Your natural strengths and blind spots — identified across all systems and translated into practical guidance.</p></div></div>
+      <div class="feature-item"><div class="feature-num">04</div><div class="feature-text"><h3>Relationship &amp; Compatibility Map</h3><p>How your energetic design interacts in love, friendship, and work — and what to look for in others.</p></div></div>
+      <div class="feature-item"><div class="feature-num">05</div><div class="feature-text"><h3>2025–2026 Cosmic Forecast</h3><p>Astrology and Numerology transits for the year ahead — key themes, pivotal months, and what to focus on now.</p></div></div>
+      <div class="feature-item"><div class="feature-num">06</div><div class="feature-text"><h3>Lifetime Access &amp; Free Updates</h3><p>Your Blueprint is yours forever. Annual forecast updates included at no extra cost.</p></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════ HOW IT WORKS -->
+<div class="how-bg">
+  <div style="max-width:800px;margin:0 auto;padding:0 24px;" class="reveal">
+    <p class="section-label">Process</p>
+    <h2 style="text-align:center;">How it <em>works</em></h2>
+    <div class="steps">
+      <div class="step"><div class="step-num">1</div><div class="step-content"><h3>Complete Your Order</h3><p>Click the button, pay securely through Stripe. Takes 60 seconds. You'll be redirected immediately to fill in your birth data.</p></div></div>
+      <div class="step"><div class="step-num">2</div><div class="step-content"><h3>Submit Your Birth Details</h3><p>Full
+ birth date, exact time, and location — the foundation for all 11 
+systems. The more precise, the more accurate your Blueprint.</p></div></div>
+      <div class="step"><div class="step-num">3</div><div class="step-content"><h3>We Calculate &amp; Write</h3><p>All 11 systems are calculated and each section is written personally for you. No templates. No generic copy-paste.</p></div></div>
+      <div class="step"><div class="step-num">4</div><div class="step-content"><h3>Your Blueprint Arrives in 7 Days</h3><p>Delivered
+ as a beautiful 60+ page PDF to your inbox. Most clients say it's the 
+most accurate self-portrait they've ever encountered.</p></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════ TESTIMONIALS -->
+<section class="testimonials reveal">
+  <p class="section-label">What People Say</p>
+  <h2>Real <em>transformations</em></h2>
+  <div class="testi-grid">
+    <div class="testi-card"><div class="testi-quote">"</div><p class="testi-text">I've
+ done individual astrology and Human Design readings before, but seeing 
+everything synthesized was completely different. The cross-system themes
+ were spot on in a way that left me speechless.</p><div class="testi-author">Maëlle R.</div><div class="testi-detail">Paris, France · Verified Buyer</div></div>
+    <div class="testi-card"><div class="testi-quote">"</div><p class="testi-text">The
+ shadow work section alone was worth 10x the price. I finally understand
+ why certain patterns keep showing up in my relationships. This is the 
+most self-aware I've ever felt.</p><div class="testi-author">James T.</div><div class="testi-detail">Toronto, Canada · Verified Buyer</div></div>
+    <div class="testi-card"><div class="testi-quote">"</div><p class="testi-text">As
+ a skeptic, I was honestly surprised. The Jungian archetype section 
+described my inner conflict so precisely it felt like someone had been 
+watching me. Remarkable work.</p><div class="testi-author">Sofia K.</div><div class="testi-detail">Berlin, Germany · Verified Buyer</div></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════ FOR WHOM -->
+<section class="for-whom reveal">
+  <p class="section-label">Is This For You?</p>
+  <h2>This is for you if <em>you feel</em>…</h2>
+  <div class="list-two-col">
+    <div class="list-item"><span>✦</span> Like you've always been "a lot" and need context for it</div>
+    <div class="list-item"><span>✦</span> Stuck in patterns you can't seem to break</div>
+    <div class="list-item"><span>✦</span> Called to something bigger but unsure what</div>
+    <div class="list-item"><span>✦</span> Misunderstood by others, even those closest to you</div>
+    <div class="list-item"><span>✦</span> At a crossroads in career, love, or life purpose</div>
+    <div class="list-item"><span>✦</span> Curious about the deeper "why" behind your personality</div>
+    <div class="list-item"><span>✦</span> Ready to stop guessing and start knowing yourself</div>
+    <div class="list-item"><span>✦</span> Interested in self-growth with a spiritual foundation</div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════ PRICING -->
+<div class="pricing-section" id="pricing">
+  <div class="reveal">
+    <p class="section-label">Investment</p>
+    <h2>One reading.<br><em>A lifetime of clarity.</em></h2>
+  </div>
+  <div class="pricing-card reveal">
+    <div class="badge">Most Popular</div>
+    <p class="price-old">$297</p>
+    <div class="price-main"><sup>$</sup>147</div>
+    <p class="price-note">Launch pricing — limited time</p>
+    <ul class="price-includes">
+      <li>60+ page personalized Soul Blueprint PDF</li>
+      <li>All 11 systems (Astrology, Human Design, Numerology, 
+Enneagram, Jungian, Gene Keys, I Ching, Chakras, Tarot, Chinese 
+Astrology + Synthesis)</li>
+      <li>Cross-system theme &amp; pattern analysis</li>
+      <li>Shadow work &amp; soul gifts guide</li>
+      <li>Relationship compatibility map</li>
+      <li>2025–2026 cosmic forecast</li>
+      <li>Lifetime access + annual forecast updates</li>
+      <li>Delivered within 7 business days</li>
+    </ul>
+    <a href="https://buy.stripe.com/6oUdR95SA7w96n0fC09oc03" class="cta-btn buy-btn" style="width:100%;text-align:center;display:block;" target="_blank" rel="noopener">Order My Soul Blueprint →</a>
+    <p class="guarantee"><strong>✦ 14-Day Satisfaction Guarantee.</strong> If your Blueprint doesn't resonate deeply, we'll revise it or refund you in full — no questions asked.</p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════ FAQ -->
+<section class="faq-section reveal">
+  <p class="section-label">Questions</p>
+  <h2><em>FAQ</em></h2>
+  <div class="faq-item"><div class="faq-q">Do I need to know my exact birth time? <span>+</span></div><div class="faq-a">An
+ exact birth time gives the most precise results for Astrology and Human
+ Design. If you don't know it, we can still produce a high-quality 
+Blueprint using a noon birth time and will note which sections may have 
+slight variations.</div></div>
+  <div class="faq-item"><div class="faq-q">How is this different from a free online reading? <span>+</span></div><div class="faq-a">Free
+ tools give you isolated, generic data. The Soul Blueprint synthesizes 
+11 systems to reveal patterns no single tool can show — and every word 
+is written specifically for you.</div></div>
+  <div class="faq-item"><div class="faq-q">How long does delivery take? <span>+</span></div><div class="faq-a">Your
+ Blueprint is delivered within 7 business days of receiving your birth 
+data. Rush delivery (3 days) is available for an additional fee at 
+checkout.</div></div>
+  <div class="faq-item"><div class="faq-q">Can I order one as a gift? <span>+</span></div><div class="faq-a">Absolutely.
+ Select "Gift" at checkout and enter your recipient's information. We'll
+ send them the birth data form directly and deliver the finished 
+Blueprint to you or to them — your choice.</div></div>
+  <div class="faq-item"><div class="faq-q">What if I'm not satisfied? <span>+</span></div><div class="faq-a">We
+ offer a 14-day guarantee. If your Blueprint doesn't resonate, tell us 
+why and we'll revise it. If you're still not satisfied, we'll issue a 
+full refund.</div></div>
+</section>
+
+<!-- ══════════════════════════════════════════════ FINAL CTA -->
+<section style="padding:80px 24px 120px;text-align:center;background:radial-gradient(ellipse 60% 50% at 50% 50%,#160e38 0%,var(--deep) 70%);">
+  <div class="reveal">
+    <p class="section-label">Begin</p>
+    <h2 style="margin-bottom:20px;">You have been<br><em>waiting long enough.</em></h2>
+    <p style="max-width:480px;margin:0 auto 44px;color:var(--text-dim);font-size:1rem;line-height:1.9;">There is a version of you that knows exactly who they are. Your Blueprint is the map to get there.</p>
+    <a href="https://buy.stripe.com/6oUdR95SA7w96n0fC09oc03" class="cta-btn buy-btn" target="_blank" rel="noopener">Reveal My Soul Blueprint</a>
+    <p class="price-hint" style="margin-top:18px;"><strong>$147</strong> &nbsp;·&nbsp; 7-day delivery &nbsp;·&nbsp; 14-day guarantee</p>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════ FOOTER -->
+<footer>
+  <div class="footer-logo">Soul <em>Blueprint</em></div>
+  <ul class="footer-links">
+    <li><a href="#">About</a></li>
+    <li><a href="#">How It Works</a></li>
+    <li><a href="#">FAQ</a></li>
+    <li><a href="#">Contact</a></li>
+    <li><a href="#">Privacy Policy</a></li>
+    <li><a href="#">Refund Policy</a></li>
+  </ul>
+  <p class="footer-copy">© 2026 Soul Blueprint. All rights reserved. For entertainment and self-reflection purposes.</p>
+</footer>
+
+<script>
+// ── STRIPE LINK MANAGER ──
+// Change this one line to update all buttons at once:
+let STRIPE_URL = 'https://buy.stripe.com/6oUdR95SA7w96n0fC09oc03';
+
+function applyStripeLink() {
+  const input = document.getElementById('stripeInput').value.trim();
+  if(!input.startsWith('http')) { alert('Please enter a valid URL starting with https://'); return; }
+  STRIPE_URL = input;
+  document.querySelectorAll('.buy-btn, .float-btn').forEach(el => el.href = STRIPE_URL);
+  closeModal();
+  // Flash confirmation
+  const banner = document.getElementById('setupBanner');
+  banner.innerHTML = '<p>✓ <strong>Stripe link applied!</strong> All buy buttons are now connected. Test by clicking one. To make permanent, replace https://buy.stripe.com/6oUdR95SA7w96n0fC09oc03 in the HTML file.</p>';
+  banner.style.background = 'linear-gradient(135deg,#001a00,#003800)';
+}
+
+function openModal() { document.getElementById('setupModal').classList.add('open'); }
+function closeModal() { document.getElementById('setupModal').classList.remove('open'); }
+document.getElementById('setupModal').addEventListener('click', e => { if(e.target === document.getElementById('setupModal')) closeModal(); });
+
+// ── STARFIELD ──
+const sf = document.getElementById('starfield');
+for(let i=0;i<180;i++) {
+  const s = document.createElement('div');
+  s.className='star';
+  const size=Math.random()*2+0.5;
+  s.style.cssText=`width:${size}px;height:${size}px;left:${Math.random()*100}%;top:${Math.random()*100}%;--dur:${2+Math.random()*5}s;--max-op:${0.2+Math.random()*0.7};animation-delay:${Math.random()*6}s;`;
+  sf.appendChild(s);
+}
+
+// ── SCROLL REVEAL ──
+const io = new IntersectionObserver(entries => entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); }), {threshold:0.1});
+document.querySelectorAll('.reveal').forEach(r => io.observe(r));
+
+// ── FLOAT CTA ──
+window.addEventListener('scroll', () => {
+  document.getElementById('floatCta').classList.toggle('visible', window.scrollY > 600);
+});
+</script>
+
+
+</body></html>
